@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} TMCTradingo {% endblock 'title' %}
+
+{% block 'style' %} 
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  {% comment %} <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          {% if not user.is_authenticated %}<li><a href="{% url "register" %}">Register</a></li>{% endif %}
+
+          <!-- <li><a href="">Contact</a></li> -->
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+  <!-- End Header --> {% endcomment %}
+
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4 mt-4">
+
+          <div class="col-lg-4">
+
+            <div class="info-item d-flex">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h4>Email:</h4>
+                <p>
+                  <p>
+                    <a href="https://mail.google.com/mail/?view=cm&to=tmcompany369@gmail.com" target="_blank">
+                      tmcompany369@gmail.com
+                    </a>
+                  </p>
+                  
+                </p>
+              </div>
+            </div><!-- End Info Item -->
+            
+            <div class="info-item d-flex">
+              <i class="bi bi-telegram flex-shrink-0"></i>
+              <div>
+                <h4>Telegram:</h4>
+                <p>
+                  <a href="https://t.me/TMCtradingo" target="_blank">@TMCtradingo</a>
+                </p>
+              </div>
+            </div><!-- End Info Item -->
+            
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+
+{% endblock 'content' %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} TMCTradingo {% endblock 'title' %}
+
+{% block 'style' %} 
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.unlock-button {
+  float: right; /* Align the unlock button to the right */
+/* Add some space between the title and the button */
+}
+
+.card {
+  border: 1px solid #ddd; /* Add a border around the card */
+  border-radius: 10px; /* Add rounded corners to the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the card */
+}
+
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 15px; /* Add some padding inside the card body */
+}
+
+.card-title {
+  font-weight: bold; /* Make the title bold */
+}
+
+</style>
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          {% if not user.is_authenticated %}<li><a href="{% url "register" %}">Register</a></li>{% endif %}
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header> <!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="min-height: 0; padding: 35px 0 60px; ">
+  </section>
+
+    <!-- ======= Hero Section ======= -->
+  <div class="section-header mt-5">
+    <span>Administration</span>
+    <h2>Administration</h2>
+  </div> 
+
+
+  <div class="container mt-5">
+
+    <div class="card card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" scope="col">Username</th>
+                    <th class="text-center" scope="col">Course</th>
+                    <th class="text-center" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in user_data %}
+                <tr>
+                  <td class="text-center">{{ data.user.username }}</td>
+                  <td class="text-center"><a data-bs-toggle="modal" data-bs-target="#course_allowed_{{ data.user.id }}" class="">{{ data.course_allowed }}</a></td>
+                  <td class="text-center">
+                    {% if data.user.username != "TmcAdmin" %}
+                    <a data-bs-toggle="modal" data-bs-target="#delete_user_{{ data.user.id }}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+                  </td>
+              </tr>
+              
+              <div class="modal fade" id="delete_user_{{ data.user.id }}" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h6 class="modal-title font-monospace" id="alertModalLabel">Administration</h6>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body p-0">
+                              <p class="alert alert-info m-0 text-center font-monospace">
+                                  Are you sure want to delete the account! ({{ data.user.username }}) <a href="{% url 'delete_user' data.user.id %}" class="alert-link">DELETE</a>
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="modal fade" id="course_allowed_{{ data.user.id }}" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title font-monospace" id="alertModalLabel">Administration</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <p class="alert alert-info m-0 text-center font-monospace">
+                                Are you sure want to change the permission! ({{ data.user.username }}) <a href="{% url 'toggle_course' data.user.id %}" class="alert-link">CHANGE</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    
+</div>
+
+
+
+{% endblock 'content' %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ module.name }}</title>
+</head>
+<body>
+    <h1>{{ module.name }}</h1>
+    
+    {% for video in videos %}
+        {% if not video.is_locked %}
+            <h3>{{ video.title }}</h3>
+            {% if video.id != 1 %}
+                {% if video.userprogress.watched %}
+                    <p>Watched</p>
+                {% else %}
+                    <form method="POST" action="{% url 'toggle_video_watched' video.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Mark as Watched">
+                    </form>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
+
+
+
+
+

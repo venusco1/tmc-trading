@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} modules {% endblock 'title' %}
+
+{% block 'style' %} 
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          {% if not user.is_authenticated %}<li><a href="{% url "register" %}">Register</a></li>{% endif %}
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header> <!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="min-height: 0; padding: 35px 0 60px; ">
+  </section>
+
+    <!-- ======= Hero Section =======
+  <div class="section-header mt-5">
+    <span>Login Here</span>
+    <h2>Login Here</h2>
+  </div>  -->
+
+  <div class="container mt-3">
+    <div class="row justify-content-center registration-container">
+
+      {% for module in modules %}
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <img src="{% static 'img/part1.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ module.name }}</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            {% if module.is_locked %}
+            <a href="{% url 'show_videos' module.id %}" class="btn btn-sm btn-outline-primary card-link">Open Module</a>
+            {% else %}
+            <a data-bs-toggle="modal" data-bs-target="#unlockModal{{ module.id }}" class="btn btn-sm btn-outline-primary card-link"><i class="bi bi-unlock-fill"></i> Unlock</a>
+            <div class="modal fade" id="unlockModal{{ module.id }}" tabindex="-1" aria-labelledby="unlockModalLabel{{ module.id }}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h6 class="modal-title font-monospace" id="unlockModalLabel{{ module.id }}">Unlock the module!</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body p-0">
+                    <p class="alert alert-info m-0 text-center font-monospace">
+                      Ready to unlock the module? Just
+                      <a href="{% url 'unlock_module' module.id %}" class="alert-link">click here.</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+
+
+
+
+
+{% endblock 'content' %}
+
+
+
+
+
+
+

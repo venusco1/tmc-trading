@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} TMCTradingo {% endblock 'title' %}
+
+{% block 'style' %}
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">About</a></li>
+          <li><a href="{% url "contact" %}">Contact</a></li>
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+          {% if user.is_authenticated %}
+            {% if user.allowcourse.course_allowed %}
+              <li><a class="get-a-quote" href="{% url "start_learning" %}">Start Learning</a></li>
+            {% else %}
+              <li><a class="get-a-quote" href="#" data-bs-toggle="modal" data-bs-target="#alertModal_StartLearning">Start Learning</a></li>
+            {% endif %}
+          {% endif %}
+          <li><a href="{% url "documents" %}">Invester Plan</a></li>
+                </ul>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+  <!-- End Header -->
+
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+    <div class="container">
+      <div class="row gy-4 d-flex justify-content-between">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"> 
+
+
+
+        <div id="carouselExampleIndicators" class="carousel slide pt-5" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            
+          <h5 class="text-center mt-5 pt-2" data-aos="fade-up" style="font-size: 1.2em; color: rgba(140, 189, 239, 0.45); font-family: 'Gill Sans', sans-serif; letter-spacing: 2px;">TRADING&nbsp;MASTERCLASS</h5> 
+          <p class="text-center custom-heading mt-1 mb-0 fw-bold" data-aos="fade-up" style="font-size: 1.9em; font-family: Georgia, serif; color: rgb(157 162 167 / 60%);">
+            Complete Guide to Trading <br>
+          
+            {% if user.is_authenticated %}
+
+            {% if user.allowcourse.course_allowed %}
+            <a class="btn btn-outline-secondary font-monospace mt-5" href="{% url 'start_learning' %}" data-toggle="modal" data-target="#loginModal" style="margin-bottom: 80px;">Start Learning</a>
+            {% else %}
+              <a class="btn btn-outline-secondary font-monospace mt-5" href="#" data-bs-toggle="modal" data-bs-target="#alertModal_StartLearning" style="margin-bottom: 80px;">Start Learning</a>
+            {% endif %}
+
+            {% else %}
+            <a class="btn btn-outline-secondary font-monospace mt-5" href="{% url 'login' %}" data-toggle="modal" data-target="#loginModal" style="margin-bottom: 80px;">Login Now!</a>
+            {% endif %}
+          </p>
+
+          </div>
+          <div class="carousel-item">
+            
+          <h5 class="text-center mt-5 pt-2" data-aos="fade-up" style="font-size: 1.2em; color: rgba(140, 189, 239, 0.45); font-family: 'Gill Sans', sans-serif; letter-spacing: 2px;">INVOSTOR&nbsp;PLAN</h5> 
+          <p class="text-center custom-heading mt-1 mb-0 fw-bold" data-aos="fade-up" style="font-size: 1.7em; font-family: Georgia, serif; color: rgb(157 162 167 / 60%);">
+            Earn Every Week, Stress-Free! <br>
+
+            <a class="btn btn-outline-secondary font-monospace mt-5" href="{% url 'documents' %}" data-toggle="modal" data-target="#loginModal" style="margin-bottom: 80px;">Check In</a>
+          </p>
+          </div>
+
+        </div>
+        <button class="carousel-control-prev px-3" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+        </div>
+        <div class="col-lg-4 order-1 order-lg-2 aos-init aos-animate justify-content-center"> 
+          <video autoplay muted loop class="border border-2" style="border-radius: 15%; max-width: 100%; height: auto;">
+            <source src="{% static "img/add.mp4" %}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        
+        
+
+      </div>
+    </div>
+  </section> <!-- End Hero Section --> 
+
+    <!-- ======= Call To Action Section ======= 
+
+    <section id="call-to-action" class="call-to-action1 mt-0">
+      <div class="container" data-aos="zoom-out">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-3">
+            <p class="custom-heading mx-3" style="font-size: 0.9em; color: rgb(255 255 255 / 74%); font-family: 'Gill Sans', sans-serif; letter-spacing: 2px; text-align: justify;">
+               This course is perfect for newcomers who want to learn the basics of trading in the cryptocurrency market. You'll discover how to start and stop trades, and how technical analysis can improve your trading skills. Whether you're new to trading or looking to enhance your strategies, this course will help you gain the knowledge and confidence needed for successful crypto trading.</p>
+            {% if user.is_authenticated %}
+
+                {% if user.allowcourse.course_allowed %}
+                <a class="cta-btn" href="{% url 'start_learning' %}" data-toggle="modal" data-target="#loginModal">Start Learning</a>
+                {% else %}
+                  <a class="cta-btn" href="#" data-bs-toggle="modal" data-bs-target="#alertModal_StartLearning">Start Learning</a>
+                {% endif %}
+
+              {% else %}
+              <a class="cta-btn" href="{% url 'login' %}" data-toggle="modal" data-target="#loginModal">Login</a>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </section> End Call To Action Section -->
+
+      
+  <main id="main">
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq mt-0">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <span>About Course</span>
+          <h2>About Course</h2>
+
+        </div>
+
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-10">
+
+            <div class="accordion accordion-flush" id="faqlist">
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    Do you have Computer or lap ?
+                  </button>
+                </h3>
+                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    
+                    While having a computer or laptop is not mandatory for this course, we recommend using a laptop for optimal learning experience. However, if you do not have one, you may still enroll in this course.</div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    Are you a complete beginner?
+                  </button>
+                </h3>
+                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    This course is designed for a complete beginner in Malayalam, if you have the basics, I suggest you don't buy this course.  If your answer is 'no', then you agree to purchase the course as the basic course is required.</div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    Is it possible to practice at least 4 months to learn trading?
+                  </button>
+                </h3>
+                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    Absolutely! With dedicated practice over a span of 4 months, you can certainly grasp the fundamentals of trading. Your commitment to learning is commendable, and I'm here to support you every step of the way. If you're ready to embark on this journey, let's proceed with the purchase and get started on your trading adventure!
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    Are you prepared to dedicate the time and believe in yourself to make this course a success?
+                  </button>
+                </h3>
+                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    In order to truly benefit from the course, it's essential to approach it with both patience and confidence. That's when you'll see the best results.
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-5">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    Please review the course outline before making your payment.
+                  </button>
+                </h3>
+                <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    This is a crypto trading focused course this course is designed for market beginners and those who don't know the basics, this is a basic course for those who don't know where to start and stop trading and what skills can be gained with the help of technical analysis.
+                    This course is elementary pre-recorded.
+                    Only course related support will be available, live / personal support will be available and there will be daily time to clear doubts.  Lap or System, tab is mandatory.
+                    Section: TECHNICAL ANALYSIS PRICE ACTION BASIC/SPOT AND FUTURE If you want you can also benefit from forex / stocks / option markets using this technical analysis (but related details are not in the video ) take the course only if you have patience to study (only then you will get results).  Start learning only after putting aside what you know, trading is a skill that anyone can develop.
+
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-6">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    WE offer Refund Policy only for 48 hours.
+                  </button>
+                </h3>
+                <div id="faq-content-6" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    Dear valued customers, we're pleased to offer a refund policy for your convenience. Please note that refunds are available within weak of your purchase. Your satisfaction is our priority, and we strive to make your shopping experience as seamless as possible. Should you have any questions or concerns, feel free to reach out to our friendly customer support team. Thank you for choosing us!
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+
+    <!-- ======= Call To Action Section ======= -->
+
+    <section id="call-to-action" class="call-to-action mt-4">
+      <div class="container" data-aos="zoom-out">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-3">
+            <h3>Ready to Begin Your Trading Journey?</h3>
+            <p> Are you ready to take the first step towards becoming a successful trader? Join our course today and unlock the potential of the financial markets.</p>
+            {% if user.is_authenticated %}
+
+              {% if user.allowcourse.course_allowed %}
+              <a class="cta-btn" href="{% url 'start_learning' %}" data-toggle="modal" data-target="#loginModal">Start Learning</a>
+              {% else %}
+                <a class="cta-btn" href="#" data-bs-toggle="modal" data-bs-target="#alertModal_StartLearning">Start Learning</a>
+              {% endif %}
+
+            {% else %}
+            <p>To access this course, please log in here</p>
+       <a class="cta-btn" href="{% url 'login' %}" data-toggle="modal" data-target="#loginModal">Login</a> 
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Call To Action Section -->
+
+    
+    <!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing pt-0">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <span>Pricing</span>
+          <h2>Pricing</h2>
+
+        </div>
+
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-4 text-center mx-auto" data-aos="fade-up" data-aos-delay="200">
+              <div class="pricing-item featured">
+                  <h4><span class="text-danger" style="text-decoration: line-through;">₹24,999</span><br> ₹2,899<span></span></h4>
+                  <ul>
+                      <li><i class="bi bi-check"></i> 4 hours of on-demand video</li>
+                      <li><i class="bi bi-check"></i> Engaging Malayalam classes</li>
+                      <li><i class="bi bi-check"></i> Lifetime access</li>
+                      <li><i class="bi bi-check"></i> Beginner-friendly content</li>
+                      <li><i class="bi bi-check"></i> Dedicated customer support</li>
+                  </ul>
+                  <button id="buyButton" class="btn btn-primary mb-4">Buy Now</button>
+              </div>
+          </div>
+      </div>
+      
+    </section><!-- End Pricing Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer mt-5">
+
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-info">
+          <a href="" class="logo d-flex align-items-center">
+            <span>TMCTradingo</span>
+          </a>
+          <p>Explore the world of trading with our comprehensive course designed for beginners. Learn at your own pace with our easy-to-follow lessons covering technical analysis, price action, and more. Start your trading journey today and unlock the potential of the financial markets.</p>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="{% url "index" %}">Home</a></li>
+            <li><a href="{% url "login" %}">Login</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4></h4>
+          <ul>
+            <li><a href="#">About Cource</a></li>
+            <li><a href="{% url "contact" %}">Contact</a></li>
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">Terms of service</a></li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="copyright">
+        &copy; Copyright <strong><span>TMCTradingo</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+  <!-- End Footer -->
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="card">
+        <div class="card-body m-3 p-3 pb-0">
+          <h5 class="card-title text-center">Deposit USDT to Binance</h5>
+          <img src="{% static "img/qr1.jpg" %}" class="card-img-top" alt="...">
+
+        </div>
+        <div class="card-body px-5">
+          <div class="row">
+            <div class="col card-text text-start"><small>Network</small></div><div class="col card-text text-end"><small>BNB Smart Chain (BEP20)</small></div>
+          </div>
+          <div class="card-text text-center text-danger mt-3"><small>Wallet Address: </small></div>
+            <div class="card-text text-center fs-6 mt-2">0x3af82556026d812c2b693eb94454b87f9ae0bfc2</div>
+            <div class="card-text text-center fs-6 mt-3"><a id="copyButton" class="btn btn-outline-warning btn-sm" style="width: 120px;"><i class="bi bi-copy"></i> Copy</a></div>
+            <div class="card-text text-center fs-6 mt-2"><a id="saveImageButton" class="btn btn-warning btn-sm text-light" style="width: 120px;"><i class="bi bi-save"></i> Save Image</a></div>          
+        </div>
+        <div class="card-body m-0 pt-2 text-center">
+          <p><small>Don't send NFTs to this address.
+            Smart contract deposits are not supported with the exception of ETH via ERC20, BSC via BEP20, Arbitrum and Optimism networks.
+          </small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="alertModal_StartLearning" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title font-monospace" id="alertModalLabel">Course Not Purchased!</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <p class="alert alert-info m-0 text-center font-monospace">
+          To access this course, please <a href="#pricing" class="alert-link">purchase it.</a> 
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('buyButton').addEventListener('click', function() {
+    var myModal = new bootstrap.Modal(document.getElementById('alertModal'));
+    myModal.show();
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var copyButton = document.getElementById('copyButton');
+      copyButton.addEventListener('click', function() {
+          var textarea = document.createElement('textarea');
+          textarea.value = '0x3af82556026d812c2b693eb94454b87f9ae0bfc2';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          alert('Address copied to clipboard!');
+      });
+  });
+</script>
+  
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var saveImageButton = document.getElementById('saveImageButton');
+      saveImageButton.addEventListener('click', function() {
+          var link = document.createElement('a');
+          link.href = '/static/img/qrcode.jpg'; 
+          link.download = 'qr1.jpg'; 
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      });
+  });
+</script>
+    
+{% endblock 'content' %}
+
+

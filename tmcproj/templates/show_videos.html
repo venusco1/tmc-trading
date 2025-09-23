@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} TMCTradingo {% endblock 'title' %}
+
+{% block 'style' %} 
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+.unlock-button {
+  float: right; /* Align the unlock button to the right */
+/* Add some space between the title and the button */
+}
+
+.card {
+  border: 1px solid #ddd; /* Add a border around the card */
+  border-radius: 10px; /* Add rounded corners to the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the card */
+}
+
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 15px; /* Add some padding inside the card body */
+}
+
+.card-title {
+  font-weight: bold; /* Make the title bold */
+}
+
+</style>
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          {% if not user.is_authenticated %}<li><a href="{% url "register" %}">Register</a></li>{% endif %}
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header> <!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="min-height: 0; padding: 35px 0 60px; ">
+  </section>
+
+    <!-- ======= Hero Section =======
+  <div class="section-header mt-5">
+    <span>Login Here</span>
+    <h2>Login Here</h2>
+  </div>  -->
+
+  <div class="container mt-5">
+    <div class="row justify-content-center registration-container">
+        <div class="col-md-6 mb-4">
+
+          {% for video in videos %}
+          <div class="card mt-4">
+            {% include "videos.html" %}
+            <div class="card-body">
+                  <div class="row">
+                      <div class="col">
+                          <h5 class="card-title"></h5>
+                      </div>
+                      <div class="col-auto">
+                          {% if video.is_locked %}
+                              <a href="#" data-bs-toggle="modal" data-bs-target="#unlockModal{{ video.id }}" class="btn btn-sm btn-outline-primary card-linkcard-link"><i class="bi bi-unlock-fill"></i> Unlock</a>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <p class="card-text mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+          </div>
+          
+          <!-- Unlock Modal -->
+          <div class="modal fade" id="unlockModal{{ video.id }}" tabindex="-1" aria-labelledby="unlockModalLabel{{ video.id }}" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="unlockModalLabel{{ video.id }}">Unlock Video</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <p>Are you sure you want to unlock this video?</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <a href="{% url 'unlock_video' video.id %}" class="btn btn-primary">Unlock</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+          
+          
+
+        </div>
+    </div>
+  </div>
+
+{% endblock 'content' %}

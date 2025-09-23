@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %} TMCTradingo {% endblock 'title' %}
+
+{% block 'style' %} 
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        {% if user.is_authenticated %}
+            <h1 class="text-danger"><i class="bi bi-person-circle"></i> {{ user.username }}</h1>
+        {% else %}
+            <h1>TMCTradingo</h1>
+        {% endif %}
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url "index" %}" class="active">Home</a></li>
+          {% if not user.is_authenticated %}<li><a href="{% url "login" %}">Login</a></li>{% endif %}
+          {% if not user.is_authenticated %}<li><a href="{% url "register" %}">Register</a></li>{% endif %}
+          {% if user.is_authenticated %}<li><a href="{% url "signout" %}">Signout</a></li>{% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header> <!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="min-height: 0; padding: 35px 0 60px; ">
+  </section>
+
+    <!-- ======= Hero Section =======
+  <div class="section-header mt-5">
+    <span>Login Here</span>
+    <h2>Login Here</h2>
+  </div>  -->
+
+  <div class="container mt-5">
+    <div class="row justify-content-center registration-container">
+        <div class="col-md-6 mb-4">
+
+          <!-- totorial 1 -->
+            <div class="card" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+
+              <!-- totorial 1 -->
+              <div class="card mt-2" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+
+
+              <!-- totorial 1 -->
+              <div class="card mt-2" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+
+              <!-- totorial 1 -->
+              <div class="card mt-2" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+
+              <!-- totorial 1 -->
+              <div class="card mt-2" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+
+              <!-- totorial 1 -->
+              <div class="card mt-2" style="">
+                <video controls loop muted poster="{% static 'tutorials/v1.jpg' %}" controlsList="nodownload">
+                  <source src="{% static 'tutorials/v1.mp4' %}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video> <!--  
+                <div class="card-body">
+                  <h5 class="card-title">vedio title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>   -->     
+            </div>
+        </div>
+    </div>
+  </div>
+
+{% endblock 'content' %}
